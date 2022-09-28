@@ -1,0 +1,23 @@
+<html>
+<body>
+<h1>Memory Time</h1>
+
+<div style='height: 800px; width: 600px; background-color: black'>
+  <img src="static/{{ pic_file }}" style='height: 100%; width: 100%; object-fit: contain' ></img>
+</div>
+
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Value</th>
+  </tr>
+   {% for md in metadata %}
+     <tr>
+       <td>{{ md }}</td>
+       <td>{{ metadata[md]}}</td>
+     </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>

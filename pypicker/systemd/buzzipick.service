@@ -1,0 +1,12 @@
+[Unit]
+Description=Buzz iPick
+
+[Service]
+User=bresnaha
+Group=bresnaha
+Type=simple
+RuntimeDirectory=/home/bresnaha/buzzipick/pypicker
+ExecStart=/home/bresnaha/buzzipick/pypicker/venv/bin/python /home/bresnaha/buzzipick/pypicker/flaskapp.py /media/bresnaha/NETBACK/Photos\ Library.photoslibrary/
+
+[Install]
+WantedBy=multi-user.target

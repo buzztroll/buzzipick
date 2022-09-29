@@ -19,6 +19,7 @@ def getpix():
     d = app.config['PIX_DB']
     p = buzzipick.PhotoPicker(d)
     picked = False
+    error_count = 0
     while not picked:
         try:
             photo_file = p.select_photo()
@@ -27,6 +28,9 @@ def getpix():
             shutil.copy(photo_file, dst_file)
             picked = True
         except Exception as ex:
+            error_count += 1
+            if error_count > 10:
+                raise
             app.logger.warn(f"Bad picture selected {str(ex)}")
 
     return flask.render_template("index.template.html", metadata=md, pic_file=os.path.basename(dst_file))
@@ -45,9 +49,13 @@ Options:
 '''
 
 
-if __name__ == "__main__":
+def main():
     args = docopt.docopt(g_usage)
     port = int(args['--port'])
     debug = int(args['--debug'])
     app.config['PIX_DB'] = args['<photoalbum>']
     app.run(port=port, debug=debug, host=args['--host'])
+
+
+if __name__ == "__main__":
+    main()

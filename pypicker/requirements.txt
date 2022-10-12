@@ -2,3 +2,4 @@ Flask==2.2.2
 Pillow==9.2.0
 Jinja2==3.1.2
 docopt==0.6.2
+pygame==2.1.2

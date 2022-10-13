@@ -9,10 +9,13 @@ g_logger = logging.getLogger(__file__)
 
 
 class PhotoPicker(object):
-    def __init__(self, photos_base_path):
+    def __init__(self, photos_base_path, only_favorites=True):
         self.originals_path = os.path.join(photos_base_path, "originals")
         self.db_path = os.path.join(photos_base_path, "database", "Photos.sqlite")
-        self.select_statement = "select ZDIRECTORY, ZFILENAME from ZASSET order by random() limit 1"
+        if only_favorites:
+            self.select_statement = "select ZDIRECTORY, ZFILENAME from ZASSET where ZFAVORITE = 1 and ZUNIFORMTYPEIDENTIFIER = \"public.jpeg\" order by random() limit 1"
+        else:
+            self.select_statement = "select ZDIRECTORY, ZFILENAME from ZASSET order by random() limit 1"
         self.con = sqlite3.connect(self.db_path)
         self.template_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                           "../templates/index.template.html")

@@ -2,8 +2,9 @@ import os.path
 import shutil
 
 import flask
-import buzzipick
 import docopt
+
+import buzziphoto.buzzipick as buzzipick
 
 
 app = flask.Flask(

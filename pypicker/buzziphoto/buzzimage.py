@@ -1,29 +1,13 @@
 import datetime
 
-import docopt
 import pygame
 
-import buzzipick
 
-
-g_usage = '''
-Usage: 
-  photoframe.py [options] <photoalbum>
-
-Options:
-  -h --help         Show this screen.
-  --interval=<int>  Delay time in seconds between pictures [default: 5]
-  --version         Show version.
-  --debug           Run in debug mode
-'''
-
-
-class ImageShower(object):
+class BuzzScreenImage(object):
     def __init__(self, width=640, height=480):
         pygame.init()
         self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.dims = self.window.get_rect()
-        # pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     def show_picture(self, pic_file):
         img = pygame.image.load(pic_file)
@@ -61,26 +45,5 @@ class ImageShower(object):
                         return False
         return False
 
-
-def main():
-    args = docopt.docopt(g_usage)
-    debug = args['--debug']
-    delay = int(args['--interval']) * 1000
-    album_dir = args['<photoalbum>']
-    p = buzzipick.PhotoPicker(album_dir)
-    i = ImageShower()
-    cnt = 0
-    done = False
-    while not done and cnt < 100:
-        cnt += 1
-        photo = p.select_photo()
-        try:
-            i.show_picture(photo)
-        except Exception as ex:
-            print(ex)
-        done = i.is_done(timeout=delay)
-    pygame.quit()
-
-
-if __name__ == "__main__":
-    main()
+    def done(self):
+        pygame.quit()

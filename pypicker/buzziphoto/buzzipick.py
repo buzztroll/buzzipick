@@ -16,7 +16,7 @@ class PhotoPicker(object):
         self.con = sqlite3.connect(self.db_path)
         self.template_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                           "../templates/index.template.html")
-        self.allowed_extension = ['jpg', 'jpeg', 'png']
+        self.allowed_extension = ['.jpg', '.jpeg', '.png']
         self.max_find_tries = 8
 
     def select_photo(self):
@@ -28,12 +28,12 @@ class PhotoPicker(object):
             row = res.fetchone()
             filename = row[1]
             dir_path = row[0]
-            g_logger.info("Found the file %s", filename)
-            file_extension = pathlib.Path('my_file.txt').suffix.lower()
+            file_extension = pathlib.Path(filename).suffix.lower()
+            g_logger.info("Found the file %s with type %s", filename, file_extension)
             cur.close()
             if file_extension in self.allowed_extension:
                 return os.path.join(self.originals_path, dir_path, filename)
-            g_logger.warning("The file %s does not have a supported extension")
+            g_logger.warning("The file %s does not have a supported extension", filename)
             try_count += 1
             if try_count > self.max_find_tries:
                 raise Exception("Unable to find a supported picture")

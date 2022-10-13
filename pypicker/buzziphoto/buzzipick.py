@@ -18,7 +18,7 @@ class PhotoPicker(object):
             self.select_statement = "select ZDIRECTORY, ZFILENAME from ZASSET order by random() limit 1"
         self.con = sqlite3.connect(self.db_path)
         self.template_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                          "../templates/index.template.html")
+                                          "templates/index.template.html")
         self.allowed_extension = ['.jpg', '.jpeg', '.png']
         self.max_find_tries = 8
 

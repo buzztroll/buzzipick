@@ -4,10 +4,12 @@
 
 ### tldr;
 
-The point of this distribution is to serve photos from an Apple Photos database via a web browsers.  In the
-first revision it runs a single endpoint webserver.  When a GET is made on that endpoint a random photo is
-selected from the Apple database and served to the client.  As the user refreshes the webpage new photos are
-served.
+The point of this distribution is to serve photos from an Apple Photos database via a non apple system. The first two thoughts are:
+1. Server random pictures from the Apple database via a web server
+2. Show random pictures on a monitor (likely from a raspberry pi)
+
+See the various language base subdirectories for specific on installing
+and running.
 
 ### Explanation 
 
@@ -32,14 +34,3 @@ at random.  It then serves that photo and its metadata as a web page.  Everytime
 server pics a new photo and serves it to the client.
 
 It uses python and flask.  I hope to try it in a Rust as well.
-
-## Installing
-
-Open up the source files and look at them.  Then look at the systemd example I have.  Then figure out how to
-make it work for you.  What do you want from me?  I already typed this much of a README that no one will ever look
-at.
-
-
-This distribution includes programs for pulling pictures out of the Apple Photos' database and displaying them in
-a web browsers.  My hope is to write this in a few (go, java, rust... C?!) of languages but I will likely just make
-it in python quickly for my own use and stop pretending that anyone cares about the code I write.

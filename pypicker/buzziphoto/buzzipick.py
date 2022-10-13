@@ -1,7 +1,10 @@
+import logging
 import os.path
 import sqlite3
 import PIL.Image as Image
 import PIL.ExifTags as ExifTags
+
+g_logger = logging.getLogger(__file__)
 
 
 class PhotoPicker(object):

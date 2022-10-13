@@ -13,7 +13,6 @@ app = flask.Flask(
  static_folder="./static",
 )
 
-# app.config.from_file('config.json', load=json.load)
 
 @app.route("/")
 def getpix():
@@ -29,6 +28,7 @@ def getpix():
             shutil.copy(photo_file, dst_file)
             picked = True
         except Exception as ex:
+            #  some pictures cannot load properly, skip a few
             error_count += 1
             if error_count > 10:
                 raise

@@ -1,6 +1,10 @@
 import datetime
+import logging
 
 import pygame
+
+
+g_logger = logging.getLogger(__file__)
 
 
 class BuzzScreenImage(object):
@@ -37,13 +41,17 @@ class BuzzScreenImage(object):
             events = [pygame.event.wait(timeout=timeout)]
             for event in events:
                 if event.type == pygame.QUIT:
+                    g_logger.info("Received a quit event")
                     return True
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE or event.unicode == 'q':
+                        g_logger.info("Received a keyboard quit event")
                         return True
                     if event.unicode == ' ':
+                        g_logger.info("Skip to the next photo")
                         return False
         return False
 
     def done(self):
+        g_logger.info("Shutting down the display")
         pygame.quit()

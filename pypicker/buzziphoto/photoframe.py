@@ -23,7 +23,9 @@ def main():
     debug = args['--debug']
     delay = int(args['--interval']) * 1000
     album_dir = args['<photoalbum>']
+    g_logger.info("Initialize the photo database")
     p = buzzipick.PhotoPicker(album_dir)
+    g_logger.info("Initialize the display")
     i = buzzimage.BuzzScreenImage()
     cnt = 0
     done = False

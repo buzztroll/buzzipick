@@ -1,3 +1,8 @@
 pic.jpeg
 .idea
 venv
+pypicker/dist
+pypicker/build
+pypicker/buzziphoto/__pycache__/
+pypicker/buzzipicks.egg-info/
+pypicker/buzzphoto.egg-info/

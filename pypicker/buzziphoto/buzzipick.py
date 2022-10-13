@@ -1,5 +1,6 @@
 import logging
 import os.path
+import pathlib
 import sqlite3
 import PIL.Image as Image
 import PIL.ExifTags as ExifTags
@@ -15,13 +16,25 @@ class PhotoPicker(object):
         self.con = sqlite3.connect(self.db_path)
         self.template_file = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                           "../templates/index.template.html")
+        self.allowed_extension = ['jpg', 'jpeg', 'png']
+        self.max_find_tries = 8
 
     def select_photo(self):
-        cur = self.con.cursor()
-        res = cur.execute(self.select_statement)
-        row = res.fetchone()
-        cur.close()
-        return os.path.join(self.originals_path, row[0], row[1])
+        done = False
+        try_count = 0
+        while not done:
+            cur = self.con.cursor()
+            res = cur.execute(self.select_statement)
+            row = res.fetchone()
+            filename = row[1]
+            dir_path = row[0]
+            file_extension = pathlib.Path('my_file.txt').suffix.lower()
+            cur.close()
+            if file_extension in self.allowed_extension:
+                return os.path.join(self.originals_path, dir_path, filename)
+            try_count += 1
+            if try_count > self.max_find_tries:
+                raise Exception("Unable to find a supported picture")
 
     def get_metadata(self, photo_file):
         md_table = {}

@@ -41,8 +41,10 @@ class BuzzScreenImage(object):
         while end_time > now:
             diff = end_time - now
             to = int(diff.total_seconds() * 1_000)
+            g_logger.info("wait for events for %dms", to)
             events = [pygame.event.wait(timeout=to)]
             for event in events:
+                g_logger.info("Found event %s", event)
                 if event.type == pygame.QUIT:
                     g_logger.info("Received a quit event")
                     return True

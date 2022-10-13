@@ -28,10 +28,12 @@ class PhotoPicker(object):
             row = res.fetchone()
             filename = row[1]
             dir_path = row[0]
+            g_logger.info("Found the file %s", filename)
             file_extension = pathlib.Path('my_file.txt').suffix.lower()
             cur.close()
             if file_extension in self.allowed_extension:
                 return os.path.join(self.originals_path, dir_path, filename)
+            g_logger.warning("The file %s does not have a supported extension")
             try_count += 1
             if try_count > self.max_find_tries:
                 raise Exception("Unable to find a supported picture")

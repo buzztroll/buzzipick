@@ -36,9 +36,12 @@ class BuzzScreenImage(object):
         pygame.display.flip()
 
     def is_done(self, timeout=5_000):
-        end_time = datetime.datetime.now() + datetime.timedelta(milliseconds=timeout)
-        while end_time > datetime.datetime.now():
-            events = [pygame.event.wait(timeout=timeout)]
+        now = datetime.datetime.now()
+        end_time = now + datetime.timedelta(milliseconds=timeout)
+        while end_time > now:
+            diff = end_time - now
+            to = int(diff.total_seconds() * 1_000)
+            events = [pygame.event.wait(timeout=to)]
             for event in events:
                 if event.type == pygame.QUIT:
                     g_logger.info("Received a quit event")
@@ -50,6 +53,8 @@ class BuzzScreenImage(object):
                     if event.unicode == ' ':
                         g_logger.info("Skip to the next photo")
                         return False
+            now = datetime.datetime.now()
+
         return False
 
     def done(self):

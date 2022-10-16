@@ -28,10 +28,8 @@ def main():
     p = buzzipick.PhotoPicker(album_dir)
     g_logger.info("Initialize the display")
     i = buzzimage.BuzzScreenImage()
-    cnt = 0
     done = False
-    while not done and cnt < 1_000:
-        cnt += 1
+    while not done:
         delay = std_delay
         logging.info("Find a photo to select...")
         photo = p.select_photo()

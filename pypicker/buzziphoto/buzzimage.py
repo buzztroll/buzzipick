@@ -7,10 +7,18 @@ import pygame
 g_logger = logging.getLogger(__file__)
 
 
+QUIT = "QUIT"
+PAUSE = "PAUSE"
+BACK = "BACK"
+FORWARD = "FORWARD"
+NEXT = "NEXT"
+
+
 class BuzzScreenImage(object):
     def __init__(self, width=640, height=480):
         pygame.init()
-        self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        # self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        self.window = pygame.display.set_mode((0, 0))
         self.dims = self.window.get_rect()
 
     def show_picture(self, pic_file):
@@ -35,7 +43,7 @@ class BuzzScreenImage(object):
         self.window.blit(img, (start_x, start_y, new_width, new_height))
         pygame.display.flip()
 
-    def is_done(self, timeout=5_000):
+    def get_event(self, timeout=5_000):
         now = datetime.datetime.now()
         end_time = now + datetime.timedelta(milliseconds=timeout)
         while end_time > now:
@@ -47,17 +55,22 @@ class BuzzScreenImage(object):
                 g_logger.info("Found event %s", event)
                 if event.type == pygame.QUIT:
                     g_logger.info("Received a quit event")
-                    return True
+                    return QUIT
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE or event.unicode == 'q':
                         g_logger.info("Received a keyboard quit event")
-                        return True
+                        return QUIT
                     if event.unicode == ' ':
-                        g_logger.info("Skip to the next photo")
-                        return False
+                        return PAUSE
+                    if event.key == pygame.K_RETURN:
+                        return NEXT
+                    if event.key == pygame.K_LEFT:
+                        return BACK
+                    if event.key == pygame.K_RIGHT:
+                        return FORWARD
             now = datetime.datetime.now()
 
-        return False
+        return NEXT
 
     def done(self):
         g_logger.info("Shutting down the display")

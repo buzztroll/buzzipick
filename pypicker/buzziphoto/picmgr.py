@@ -27,6 +27,8 @@ class PictureManager(object):
 
     def back(self):
         self.current_ndx -= 1
+        if self.current_ndx < 0:
+            self.current_ndx = 0
 
     def forward(self):
         self.current_ndx += 1

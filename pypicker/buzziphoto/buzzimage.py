@@ -17,8 +17,7 @@ NEXT = "NEXT"
 class BuzzScreenImage(object):
     def __init__(self, width=640, height=480):
         pygame.init()
-        # self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.window = pygame.display.set_mode((0, 0))
+        self.window = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.dims = self.window.get_rect()
 
     def show_picture(self, pic_file):
